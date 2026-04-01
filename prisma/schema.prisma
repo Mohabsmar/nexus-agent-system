@@ -1,0 +1,159 @@
+// NEXUS Agent System - Prisma Schema
+// Persistent storage for sessions, memory, and configuration
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Sessions
+model Session {
+  id          String   @id @default(cuid())
+  goal        String
+  status      String   @default("pending") // pending, running, completed, failed, paused
+  provider    String?
+  model       String?
+  tokensUsed  Int      @default(0)
+  cost        Float    @default(0)
+  startedAt   DateTime @default(now())
+  endedAt     DateTime?
+  result      String?  // JSON serialized result
+  error       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  checkpoints Checkpoint[]
+  toolCalls   ToolCall[]
+  memoryItems MemoryItem[]
+  evaluation  Evaluation?
+}
+
+// Checkpoints for rollback
+model Checkpoint {
+  id          String   @id @default(cuid())
+  sessionId   String
+  description String
+  snapshot    String   // JSON serialized snapshot
+  canRollback Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+// Tool calls tracking
+model ToolCall {
+  id          String   @id @default(cuid())
+  sessionId   String
+  tool        String
+  parameters  String   // JSON serialized parameters
+  status      String   @default("pending") // pending, running, success, failed
+  result      String?  // JSON serialized result
+  error       String?
+  retryCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+// Memory storage
+model MemoryItem {
+  id          String   @id @default(cuid())
+  sessionId   String?
+  type        String   // episodic, semantic, procedural, preference
+  content     String
+  metadata    String?  // JSON serialized metadata
+  tags        String?  // Comma-separated tags
+  accessCount Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  session     Session? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+}
+
+// Evaluation scores
+model Evaluation {
+  id                 String   @id @default(cuid())
+  sessionId          String   @unique
+  taskCompletion     Float
+  efficiency         Float
+  toolSelection      Float
+  errorHandling      Float
+  memoryUtilization  Float
+  voiceQuality       Float
+  overall            Float
+  createdAt          DateTime @default(now())
+
+  session            Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+// Skills registry
+model Skill {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String
+  source       String   // clawdhub, smithery, npm, github, etc.
+  version      String
+  author       String
+  rating       Float    @default(0)
+  installCount Int      @default(0)
+  installed    Boolean  @default(false)
+  capabilities String?  // Comma-separated
+  dependencies String?  // Comma-separated
+  config       String?  // JSON serialized config
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Provider health tracking
+model ProviderHealth {
+  id          String   @id @default(cuid())
+  name        String   @unique // anthropic, openai, groq, etc.
+  status      String   @default("healthy") // healthy, degraded, offline
+  latency     Int      @default(0)
+  errorCount  Int      @default(0)
+  lastCheck   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// User preferences
+model Preference {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   // JSON serialized value
+  category  String   // editor, language, voice, provider, general
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Improvement notes
+model ImprovementNote {
+  id          String   @id @default(cuid())
+  category    String   // efficiency, tool_selection, memory, cost, voice
+  description String
+  suggestion  String
+  applied     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  appliedAt   DateTime?
+}
+
+// User configuration
+model Config {
+  id               String   @id @default(cuid())
+  alias            String   @default("NEXUS")
+  defaultProvider  String   @default("anthropic")
+  defaultModel     String   @default("claude-sonnet-4-6")
+  voiceEnabled     Boolean  @default(false)
+  voiceProvider    String   @default("openai_tts")
+  voicePersona     String   @default("assistant")
+  privacyMode      Boolean  @default(false)
+  costOptimization Boolean  @default(true)
+  maxRetries       Int      @default(3)
+  timeout          Int      @default(120000)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
