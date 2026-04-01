@@ -3,7 +3,7 @@
 
 // ==================== Provider Types ====================
 
-export type ProviderName = 'anthropic' | 'openai' | 'groq' | 'mistral' | 'together' | 'google' | 'cohere' | 'ollama';
+export type ProviderName = 'anthropic' | 'openai' | 'groq' | 'mistral' | 'together' | 'google' | 'cohere' | 'xai' | 'deepseek' | 'ollama';
 
 export interface Provider {
   name: ProviderName;

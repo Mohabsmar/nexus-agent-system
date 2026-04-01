@@ -1,5 +1,6 @@
 // NEXUS Multi-Provider LLM Router
 // Intelligent routing across AI providers with cost optimization and fallback
+// Updated April 2025 with LATEST models
 
 import { 
   ProviderName, 
@@ -8,103 +9,226 @@ import {
   TaskNodeType 
 } from './types';
 
-// Provider registry with model information
+// Provider registry with LATEST 2025 models
 const PROVIDER_REGISTRY: Record<ProviderName, Provider> = {
   anthropic: {
     name: 'anthropic',
-    models: ['claude-opus-4-6', 'claude-sonnet-4-6', 'claude-haiku-4-5'],
+    models: [
+      'claude-opus-4-6',        // Latest flagship, 1M context
+      'claude-sonnet-4-6',      // Best value, 1M context
+      'claude-opus-4-5',        // Previous flagship
+      'claude-sonnet-4-5',      // Extended context
+      'claude-haiku-4-5',       // Fast, cost-efficient
+    ],
     apiBase: 'https://api.anthropic.com',
     auth: 'ANTHROPIC_API_KEY',
-    strengths: ['reasoning', 'coding', 'long_context', 'safety'],
+    strengths: ['reasoning', 'coding', 'long_context', 'safety', 'extended_thinking'],
     status: 'healthy',
     latency: 800,
-    costPerToken: 0.000015,
+    costPerToken: 0.000003,
   },
   openai: {
     name: 'openai',
-    models: ['gpt-4o', 'gpt-4o-mini', 'o3'],
+    models: [
+      'gpt-5.4-pro',            // Latest flagship, 1.05M context
+      'gpt-5.4',                // Standard flagship
+      'gpt-5.4-mini',           // Cost-efficient
+      'gpt-5.4-nano',           // Fastest, cheapest
+      'gpt-4.1',                // 1M context
+      'gpt-4.1-mini',           // Efficient variant
+      'o3',                     // Advanced reasoning
+      'o3-pro',                 // Premium reasoning
+      'o4-mini',                // Efficient reasoning
+      'gpt-5-codex',            // Code-specialized
+    ],
     apiBase: 'https://api.openai.com',
     auth: 'OPENAI_API_KEY',
-    strengths: ['vision', 'function_calling', 'structured_output', 'math'],
+    strengths: ['vision', 'function_calling', 'structured_output', 'math', 'reasoning', 'code'],
     status: 'healthy',
     latency: 600,
-    costPerToken: 0.00001,
+    costPerToken: 0.000005,
   },
   groq: {
     name: 'groq',
-    models: ['llama-3.3-70b-versatile', 'mixtral-8x7b-32768', 'gemma2-9b-it'],
+    models: [
+      'llama-4-maverick',       // Latest, 1M context, ultra-fast
+      'llama-4-scout',          // Efficient variant
+      'llama-3.3-70b-versatile', // Previous flagship
+      'mixtral-8x7b-32768',     // Huge context
+      'gemma-2-9b-it',          // Tiny but fast
+    ],
     apiBase: 'https://api.groq.com/openai/v1',
     auth: 'GROQ_API_KEY',
-    strengths: ['speed', 'cost', 'open_weights', 'streaming'],
+    strengths: ['speed', 'cost', 'open_weights', 'streaming', 'ultra_low_latency'],
     status: 'healthy',
-    latency: 100,
+    latency: 50,  // Sub-100ms!
     costPerToken: 0.0000002,
   },
   mistral: {
     name: 'mistral',
-    models: ['mistral-large-latest', 'codestral-latest', 'mistral-embed'],
+    models: [
+      'mistral-large-3-2512',   // Latest flagship
+      'mistral-small-4',        // Efficient, capable
+      'devstral-2-2512',        // Code-specialized
+      'codestral-2508',         // Code generation
+      'ministral-3-14b',        // Edge deployment
+      'voxtral-small-24b',      // Audio-native
+      'pixtral-large',          // Vision model
+    ],
     apiBase: 'https://api.mistral.ai/v1',
     auth: 'MISTRAL_API_KEY',
-    strengths: ['european_data', 'code', 'embeddings'],
+    strengths: ['european_data', 'code', 'embeddings', 'open_weights', 'audio', 'vision'],
     status: 'healthy',
     latency: 400,
-    costPerToken: 0.000005,
+    costPerToken: 0.0000005,
   },
   together: {
     name: 'together',
-    models: ['meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo', 'Qwen/Qwen2.5-Coder-32B-Instruct'],
+    models: [
+      'meta-llama/Llama-4-Maverick-17B-128E-Instruct',  // Latest Llama
+      'meta-llama/Llama-4-Scout-17B-16E-Instruct',
+      'deepseek-ai/DeepSeek-V3.2',                     // Latest DeepSeek
+      'Qwen/Qwen3-72B-Instruct',                       // Latest Qwen
+      'mistralai/Mistral-Large-3-2512',
+    ],
     apiBase: 'https://api.together.xyz/v1',
     auth: 'TOGETHER_API_KEY',
-    strengths: ['open_weights', 'fine_tuning', 'batch'],
+    strengths: ['open_weights', 'fine_tuning', 'batch', 'variety'],
     status: 'healthy',
     latency: 500,
-    costPerToken: 0.000003,
+    costPerToken: 0.0000006,
   },
   google: {
     name: 'google',
-    models: ['gemini-2.0-flash', 'gemini-2.0-pro'],
+    models: [
+      'gemini-3.1-pro-preview',      // Latest generation
+      'gemini-3-flash-preview',      // Fast, efficient
+      'gemini-3.1-flash-lite-preview', // Ultra-efficient
+      'gemini-2.5-pro',              // Production-ready
+      'gemini-2.5-flash',            // Fast inference
+      'gemma-3-27b',                 // Open weights
+    ],
     apiBase: 'https://generativelanguage.googleapis.com',
     auth: 'GOOGLE_API_KEY',
-    strengths: ['multimodal', 'google_search', 'long_context'],
+    strengths: ['multimodal', 'google_search', 'long_context', 'vision', 'image_gen'],
     status: 'healthy',
     latency: 700,
-    costPerToken: 0.000008,
+    costPerToken: 0.000002,
   },
   cohere: {
     name: 'cohere',
-    models: ['command-r-plus', 'embed-english-v3.0'],
+    models: [
+      'command-a',                   // Latest flagship
+      'command-r-plus-08-2024',      // RAG-optimized
+      'command-r-08-2024',           // Efficient RAG
+      'command-r7b-12-2024',         // Lightweight
+    ],
     apiBase: 'https://api.cohere.ai',
     auth: 'COHERE_API_KEY',
-    strengths: ['rag', 'reranking', 'embeddings'],
+    strengths: ['rag', 'reranking', 'embeddings', 'enterprise', 'multilingual'],
     status: 'healthy',
     latency: 300,
-    costPerToken: 0.000004,
+    costPerToken: 0.0000025,
+  },
+  xai: {
+    name: 'xai',
+    models: [
+      'grok-4.20',                   // 2M CONTEXT!! Largest in market
+      'grok-4.20-multi-agent',       // Multi-agent capabilities
+      'grok-4.1-fast',               // Ultra-fast with 2M context
+      'grok-4',                      // Standard flagship
+      'grok-code-fast-1',            // Code-specialized
+      'grok-3-mini',                 // Efficient variant
+    ],
+    apiBase: 'https://api.x.ai/v1',
+    auth: 'XAI_API_KEY',
+    strengths: ['real_time_info', 'largest_context', 'multi_agent', 'uncensored', 'code'],
+    status: 'healthy',
+    latency: 400,
+    costPerToken: 0.000002,
+  },
+  deepseek: {
+    name: 'deepseek',
+    models: [
+      'deepseek-v3.2-speciale',      // Latest flagship
+      'deepseek-v3.2',               // Standard variant
+      'deepseek-r1',                 // Reasoning model
+      'r1-distill-llama-70b',        // Reasoning distilled
+      'deepseek-coder-v2',           // Code-specialized
+    ],
+    apiBase: 'https://api.deepseek.com/v1',
+    auth: 'DEEPSEEK_API_KEY',
+    strengths: ['ultra_cheap', 'reasoning', 'code', 'open_weights', 'chinese'],
+    status: 'healthy',
+    latency: 600,
+    costPerToken: 0.00000026,  // CRAZY CHEAP!
   },
   ollama: {
     name: 'ollama',
-    models: ['llama3.2', 'codellama', 'mistral'],
+    models: [
+      'llama4:17b',                  // Llama 4 Maverick local
+      'llama3.3:70b',                // Llama 3.3 70B
+      'deepseek-r1:70b',             // DeepSeek R1
+      'mistral-large3',              // Mistral Large 3
+      'gemma3:27b',                  // Gemma 3
+      'qwen3:72b',                   // Qwen 3
+      'codestral',                   // Code model
+    ],
     apiBase: 'http://localhost:11434',
     auth: null,
-    strengths: ['privacy', 'offline', 'custom_fine_tunes', 'free'],
+    strengths: ['privacy', 'offline', 'custom_fine_tunes', 'free', 'uncensored'],
     status: 'healthy',
-    latency: 1000,
+    latency: 1500,
     costPerToken: 0,
   },
 };
 
-// Task type to optimal model mapping
+// Task type to optimal model mapping (UPDATED FOR 2025!)
 const TASK_MODEL_MAPPING: Record<TaskNodeType, { primary: string; fallback: string[] }> = {
-  research: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  reasoning: { primary: 'claude-sonnet-4-6', fallback: ['gpt-4o', 'mistral-large-latest'] },
-  coding: { primary: 'claude-sonnet-4-6', fallback: ['gpt-4o', 'codestral-latest'] },
-  file_op: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  api_call: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'gemma2-9b-it'] },
-  voice: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  memory: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  marketplace: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  human_input: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  validation: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
-  rollback: { primary: 'claude-haiku-4-5', fallback: ['gpt-4o-mini', 'llama-3.3-70b-versatile'] },
+  research: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'llama-4-maverick', 'gemini-3-flash-preview'] 
+  },
+  reasoning: { 
+    primary: 'claude-sonnet-4-6', 
+    fallback: ['o3', 'gemini-3.1-pro-preview', 'mistral-large-3-2512'] 
+  },
+  coding: { 
+    primary: 'claude-sonnet-4-6', 
+    fallback: ['gpt-5-codex', 'devstral-2-2512', 'codestral-2508'] 
+  },
+  file_op: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'llama-4-scout', 'mistral-small-4'] 
+  },
+  api_call: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-mini', 'llama-4-scout'] 
+  },
+  voice: { 
+    primary: 'gpt-5.4-nano', 
+    fallback: ['claude-haiku-4-5', 'gemini-3-flash-preview'] 
+  },
+  memory: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'llama-4-scout'] 
+  },
+  marketplace: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'mistral-small-4'] 
+  },
+  human_input: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-mini', 'gemini-3-flash-preview'] 
+  },
+  validation: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'llama-4-scout'] 
+  },
+  rollback: { 
+    primary: 'claude-haiku-4-5', 
+    fallback: ['gpt-5.4-nano', 'mistral-small-4'] 
+  },
 };
 
 export class LLMRouter {
@@ -140,7 +264,7 @@ export class LLMRouter {
     if (privacyMode) {
       return {
         provider: 'ollama',
-        model: 'llama3.2',
+        model: 'llama4:17b',
         reason: 'Privacy mode enabled - using local Ollama',
         fallbackChain: [],
       };
@@ -157,18 +281,24 @@ export class LLMRouter {
 
     // Check if vision is required
     if (context?.requiresVision) {
-      selectedProvider = 'openai';
-      selectedModel = 'gpt-4o';
+      selectedProvider = 'google';
+      selectedModel = 'gemini-3.1-pro-preview';
     }
 
-    // Check latency budget
-    if (context?.latencyBudget && context.latencyBudget < 500) {
+    // Check latency budget - use Groq for ultra-fast inference
+    if (context?.latencyBudget && context.latencyBudget < 200) {
       selectedProvider = 'groq';
-      selectedModel = 'llama-3.3-70b-versatile';
+      selectedModel = 'llama-4-maverick';
     }
 
-    // Check for large context needs
-    if (context?.tokensNeeded && context.tokensNeeded > 50000) {
+    // Check for large context needs - use Grok 4.20 for 2M context!
+    if (context?.tokensNeeded && context.tokensNeeded > 100000) {
+      selectedProvider = 'xai';
+      selectedModel = 'grok-4.20';  // 2M context window!
+    }
+
+    // Deep reasoning tasks
+    if (taskType === 'reasoning' && context?.tokensNeeded && context.tokensNeeded > 50000) {
       selectedProvider = 'anthropic';
       selectedModel = 'claude-opus-4-6';
     }
@@ -181,10 +311,13 @@ export class LLMRouter {
     }
 
     // Cost optimization: use cheaper models for simple tasks
-    if (costOptimization && taskType in ['research', 'file_op', 'validation']) {
-      if (this.isProviderHealthy('groq')) {
+    if (costOptimization && ['research', 'file_op', 'validation'].includes(taskType)) {
+      if (this.isProviderHealthy('deepseek')) {
+        selectedProvider = 'deepseek';
+        selectedModel = 'deepseek-v3.2';
+      } else if (this.isProviderHealthy('groq')) {
         selectedProvider = 'groq';
-        selectedModel = 'llama-3.3-70b-versatile';
+        selectedModel = 'llama-4-maverick';
       }
     }
 
@@ -207,7 +340,7 @@ export class LLMRouter {
 
   private findProviderForModel(model: string): ProviderName {
     for (const [name, provider] of Object.entries(PROVIDER_REGISTRY) as [ProviderName, Provider][]) {
-      if (provider.models.includes(model)) {
+      if (provider.models.some(m => m.toLowerCase().includes(model.toLowerCase()))) {
         return name;
       }
     }
@@ -241,7 +374,7 @@ export class LLMRouter {
     
     // Always add local Ollama as last resort
     if (this.isProviderHealthy('ollama')) {
-      chain.push('ollama/llama3.2');
+      chain.push('ollama/llama4:17b');
     }
     
     return chain;
