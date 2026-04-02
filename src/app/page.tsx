@@ -71,7 +71,7 @@ interface DashboardStats {
   memoryEntries: number;
 }
 
-export default function NexusDashboard() {
+export default function ZClawDashboard() {
   // State
   const [activeTab, setActiveTab] = useState('dashboard');
   const [goal, setGoal] = useState('');
@@ -231,8 +231,8 @@ export default function NexusDashboard() {
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">NEXUS</h1>
-                <p className="text-xs text-gray-400">Next-Generation Extensible Unified Agent System</p>
+                <h1 className="text-xl font-bold">Z-Claw</h1>
+                <p className="text-xs text-gray-400">Zero-Compromise Learning & Agent Workbench</p>
               </div>
             </div>
             
@@ -878,10 +878,10 @@ export default function NexusDashboard() {
           <div className="flex items-center justify-between text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
-              <span>NEXUS v1.0.0</span>
+              <span>Z-Claw v1.0.0</span>
             </div>
             <div className="flex items-center gap-4">
-              <span>The OpenClaw Killer</span>
+              <span>Built by Mohab & VoiceClaw</span>
             </div>
           </div>
         </div>

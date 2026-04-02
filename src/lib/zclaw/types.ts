@@ -1,4 +1,4 @@
-// NEXUS - Next-Generation Extensible Unified Agent System
+// Z-Claw - Zero-Compromise Learning & Agent Workbench
 // Core Type Definitions
 
 // ==================== Provider Types ====================
@@ -375,7 +375,7 @@ export interface CostBreakdown {
 
 // ==================== Config Types ====================
 
-export interface NexusConfig {
+export interface ZClawConfig {
   alias: string;
   defaultProvider: ProviderName;
   defaultModel: string;

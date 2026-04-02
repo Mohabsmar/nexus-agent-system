@@ -1,4 +1,4 @@
-// NEXUS DAG-Based Task Planner
+// Z-Claw DAG-Based Task Planner
 // Builds Directed Acyclic Graphs for task execution with parallelism
 
 import { 

@@ -1,4 +1,4 @@
-// NEXUS Voice Layer
+// Z-Claw Voice Layer
 // Full-duplex voice with TTS/STT multi-provider support
 
 import {
@@ -344,7 +344,7 @@ export class VoiceLayer {
   // Voice test
   async test(): Promise<{ tts: boolean; stt: boolean; error?: string }> {
     try {
-      await this.speak('Voice test successful. NEXUS is ready.');
+      await this.speak('Voice test successful. Z-Claw is ready.');
       return { tts: true, stt: true };
     } catch (error) {
       return { 

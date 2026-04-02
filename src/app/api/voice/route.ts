@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAgent } from '@/lib/nexus';
+import { getAgent } from '@/lib/zclaw';
 
 // GET /api/voice - Get voice configuration
 export async function GET() {

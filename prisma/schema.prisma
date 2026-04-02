@@ -1,4 +1,4 @@
-// NEXUS Agent System - Prisma Schema
+// Z-Claw Agent System - Prisma Schema
 // Persistent storage for sessions, memory, and configuration
 
 generator client {
@@ -144,7 +144,7 @@ model ImprovementNote {
 // User configuration
 model Config {
   id               String   @id @default(cuid())
-  alias            String   @default("NEXUS")
+  alias            String   @default("Z-Claw")
   defaultProvider  String   @default("anthropic")
   defaultModel     String   @default("claude-sonnet-4-6")
   voiceEnabled     Boolean  @default(false)

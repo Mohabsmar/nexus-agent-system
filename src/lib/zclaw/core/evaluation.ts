@@ -1,4 +1,4 @@
-// NEXUS Self-Improvement & Evaluation Loop
+// Z-Claw Self-Improvement & Evaluation Loop
 // Post-run evaluation and automatic improvement suggestions
 
 import { EvaluationScore, ImprovementNote, Session } from './types';

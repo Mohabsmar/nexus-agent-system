@@ -1,4 +1,4 @@
-// NEXUS Multi-Tier Memory Engine
+// Z-Claw Multi-Tier Memory Engine
 // 5-tier memory system with semantic search and persistence
 
 import {

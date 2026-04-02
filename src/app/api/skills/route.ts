@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAgent } from '@/lib/nexus';
+import { getAgent } from '@/lib/zclaw';
 
 // GET /api/skills - Get skills or search
 export async function GET(request: NextRequest) {

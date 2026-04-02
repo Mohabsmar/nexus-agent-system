@@ -1,4 +1,4 @@
-// NEXUS Multi-Provider LLM Router
+// Z-Claw Multi-Provider LLM Router
 // Intelligent routing across AI providers with cost optimization and fallback
 // Updated April 2025 with LATEST models
 

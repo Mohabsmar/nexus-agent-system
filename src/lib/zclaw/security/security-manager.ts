@@ -1,4 +1,4 @@
-// NEXUS Security & Permissions
+// Z-Claw Security & Permissions
 // Capability-based permission system with secret management
 
 import { Permissions, PermissionLevel, Secret } from './types';

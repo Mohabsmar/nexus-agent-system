@@ -1,4 +1,4 @@
-// NEXUS Checkpoint & Rollback System
+// Z-Claw Checkpoint & Rollback System
 // State snapshots for safe operation recovery
 
 import { Checkpoint } from './types';

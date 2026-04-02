@@ -1,4 +1,4 @@
-// NEXUS Tool Registry with Self-Healing Execution
+// Z-Claw Tool Registry with Self-Healing Execution
 // Comprehensive tool system with 4-layer resilience
 
 import {

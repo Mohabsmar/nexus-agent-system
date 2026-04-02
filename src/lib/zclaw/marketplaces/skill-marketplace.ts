@@ -1,4 +1,4 @@
-// NEXUS Skill Marketplace Integration
+// Z-Claw Skill Marketplace Integration
 // Unified access to ClawdHub, Smithery, npm, GitHub, and more
 
 import { Skill, SkillSearchResult, MarketplaceSource } from './types';
@@ -128,7 +128,7 @@ const SAMPLE_SKILLS: Skill[] = [
     id: randomUUID(),
     name: 'Slack Integration',
     slug: 'slack-integration',
-    description: 'Send messages, search channels, and manage Slack workspace through NEXUS',
+    description: 'Send messages, search channels, and manage Slack workspace through Z-Claw',
     source: 'composio',
     version: '1.0.0',
     author: 'composio',

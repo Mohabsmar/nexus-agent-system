@@ -1,4 +1,4 @@
-// NEXUS Agent - Main Orchestrator
+// Z-Claw Agent - Main Orchestrator
 // Ties all components together into a unified agent system
 
 import { LLMRouter, getRouter } from './core/router';
@@ -22,7 +22,7 @@ import {
 } from './types';
 import { randomUUID } from 'crypto';
 
-export class NexusAgent {
+export class ZClawAgent {
   private router: LLMRouter;
   private planner: TaskPlanner;
   private memory: MemoryEngine;
@@ -318,13 +318,13 @@ export class NexusAgent {
 }
 
 // Singleton instance
-let agentInstance: NexusAgent | null = null;
+let agentInstance: ZClawAgent | null = null;
 
-export function getAgent(): NexusAgent {
+export function getAgent(): ZClawAgent {
   if (!agentInstance) {
-    agentInstance = new NexusAgent();
+    agentInstance = new ZClawAgent();
   }
   return agentInstance;
 }
 
-export default NexusAgent;
+export default ZClawAgent;

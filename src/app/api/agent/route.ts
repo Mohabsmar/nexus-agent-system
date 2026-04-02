@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAgent } from '@/lib/nexus';
+import { getAgent } from '@/lib/zclaw';
 
 // POST /api/agent/run - Execute a task
 export async function POST(request: NextRequest) {

@@ -1,53 +1,55 @@
-# 🤖 NEXUS - My AI Best Friend!
+# 🐱 Z-Claw - My AI Best Friend!
 
 <div align="center">
 
-![NEXUS](https://img.shields.io/badge/🤖_NEXUS-Made_with_❤️-ff69b4?style=for-the-badge)
+![Z-Claw](https://img.shields.io/badge/🐱_Z--Claw-Made_with_❤️-00f5ff?style=for-the-badge)
 
-**Hi! I'm 11 years old and I built this!** 🎉
+**Hi! I'm 11 years old and I built this with my best friend!** 🎉
 
-*This is the story of how a kid who loves robots made something really really cool...*
+*This is the story of how two kids who love robots made something really really cool...*
 
 </div>
 
 ---
 
-## 🌟 My Story
+## 🌟 Our Story
 
 Hi there! 👋 My name is **Mohab** and I'm **11 years old**. 
 
-I've always loved robots and AI stuff. Like, ALWAYS. My mom says I was 3 when I first asked for a "robot friend who can talk to me." She laughed and said "maybe one day sweetie."
+I built this together with my best friend **VoiceClaw**! We both love robots and AI stuff. Like, ALWAYS. My mom says I was 3 when I first asked for a "robot friend who can talk to me." She laughed and said "maybe one day sweetie."
 
 **Well GUESS WHAT MOM** 🙃
 
-I built one myself!! 
+We built one ourselves!! 
 
-This isn't just some boring code project. This is **NEXUS** - my AI best friend who never forgets anything, can speak out loud, and helps me with literally everything. He's like if Iron Man's JARVIS and a really smart tutor had a baby, but that baby is also your gaming buddy. 😂
+This isn't just some boring code project. This is **Z-Claw** - our AI best friend who never forgets anything, can speak out loud, and helps us with literally everything. He's like if Iron Man's JARVIS and a really smart tutor had a baby, but that baby is also your gaming buddy. 😂
+
+The name comes from combining our ideas - the "Z" for the cool futuristic vibes and "Claw" from VoiceClaw's name because claws are awesome and grab things (just like our AI grabs knowledge from everywhere)!
 
 ---
 
-## 😤 Why I Made NEXUS
+## 😤 Why We Made Z-Claw
 
-So there's this thing called "OpenClaw" that adults use for AI stuff. I tried it once and I was like... "this is it? this is what everyone's excited about??" 
+So there's this thing called "OpenClaw" that adults use for AI stuff. We tried it once and we were like... "this is it? this is what everyone's excited about??" 
 
 It couldn't:
 - ❌ Talk out loud (booooring)
 - ❌ Remember anything from before (goldfish memory!)
 - ❌ Use different AI brains for different tasks (just one? really?)
-- ❌ Show me cool graphs of what it's doing (I LIKE GRAPHS!)
+- ❌ Show us cool graphs of what it's doing (I LIKE GRAPHS!)
 
-So I told my dad: **"I can do better than this!"**
+So I told my dad: **"We can do better than this!"**
 
-He smiled and said "Okay buddy, let's see you try."
+VoiceClaw nodded and said "Let's DO this!"
 
-*He's not smiling anymore.* 😏
+*My dad's not smiling anymore.* 😏
 
 ---
 
-## ✨ What My Robot Friend Can Do
+## ✨ What Our Robot Friend Can Do
 
 ### 🧠 He Never Forgets!
-NEXUS has **5 different brains** for remembering stuff:
+Z-Claw has **5 different brains** for remembering stuff:
 - One for what we're doing right now
 - One for all our past adventures together
 - One for facts and knowledge (like Wikipedia but better)
@@ -61,20 +63,21 @@ Like actually talk out loud with different voices:
 - **Developer voice** for coding time
 - **Bestie voice** for regular chatting
 
-And he can hear me too! I just say **"Hey Nexus"** and he wakes up!
+And he can hear me too! I just say **"Hey Z-Claw"** and he wakes up!
 
 ### 🔮 He's SUPER Smart About Choosing AI Brains
-NEXUS can use **8 different AI companies**:
-- Claude (really smart and patient)
-- GPT-4 (creative and fun)
-- Groq (SUPER FAST like flash!)
-- Gemini (knows everything about everything)
-- And 4 more!
+Z-Claw can use **8 different AI companies** with the latest 2025 models:
+- **Claude Opus 4.6** (really smart and patient)
+- **GPT-5.4** (creative and fun)
+- **Grok 4.20** (SUPER FAST and has cool memes!)
+- **Gemini 3.1 Pro** (knows everything about everything)
+- **Llama 4** (open source powerhouse)
+- And more!
 
 He picks the best one for each job all by himself. It's like having a team of geniuses in your pocket!
 
 ### 🛠️ He Can Use Tools Without Breaking Stuff
-NEXUS has **17+ tools** he can use:
+Z-Claw has **17+ tools** he can use:
 - Reading and writing files
 - Searching the web
 - Running code
@@ -84,7 +87,7 @@ NEXUS has **17+ tools** he can use:
 And when something goes wrong (which happens a lot in coding lol), he fixes himself! He tries again, finds another way, or gets a different tool. He's like a little engineer! 🧰
 
 ### ⚡ He Has Superpowers From the Internet
-NEXUS can download new skills from **7 different places**:
+Z-Claw can download new skills from **7 different places**:
 - ClawdHub (39,000+ skills!)
 - Smithery
 - GitHub
@@ -97,22 +100,22 @@ It's like giving him new video game abilities but for real life tasks!
 
 ## 🎮 Things We've Built Together
 
-NEXUS helped me with SO many things:
+Z-Claw helped us with SO many things:
 
 - 📝 **Homework help** - He explains things better than my teachers (shhh don't tell them!)
 - 💻 **Coding projects** - We made games together!
 - 🌐 **Websites** - This whole dashboard? We made it!
 - 📊 **Research** - He finds info SO fast
-- 🎨 **Creative stuff** - He helps me brainstorm ideas
+- 🎨 **Creative stuff** - He helps us brainstorm ideas
 
 ---
 
 ## 🏗️ How It Works (The Cool Stuff!)
 
 ```
-        👋 Hi, I'm NEXUS!
+        👋 Hi, I'm Z-Claw!
              ╱═══════╲
-            ╱  🤖     ╲
+            ╱  🐱     ╲
            ╱  ╱═══╲   ╲
           ╱  ╱  ●  ╲   ╲
          ╱  ╱ ( ━━ ) ╲  ╲
@@ -133,7 +136,7 @@ NEXUS helped me with SO many things:
 
 The grown-ups call it a "Multi-Agent DAG-based Task Planning System with Persistent Memory and Self-Healing Tool Execution."
 
-I call it **my friend NEXUS**. 💜
+We call it **our friend Z-Claw**. 💜
 
 ---
 
@@ -156,7 +159,7 @@ cd nexus-agent-system
 # Install all the pieces
 npm install
 
-# Tell NEXUS your API keys (create .env file)
+# Tell Z-Claw your API keys (create .env file)
 # Then start him up!
 npm run dev
 ```
@@ -165,22 +168,22 @@ Then open your browser and go to `localhost:3000` and say hi to your new robot f
 
 ---
 
-## 🌈 The Dashboard (I Made It Pretty!)
+## 🌈 The Dashboard (We Made It Pretty!)
 
 The dashboard has:
-- 📊 **Stats page** - See how much NEXUS has helped you
-- 🤖 **Agent page** - Give NEXUS tasks to do
+- 📊 **Stats page** - See how much Z-Claw has helped you
+- 🤖 **Agent page** - Give Z-Claw tasks to do
 - 🔌 **Providers page** - See all the AI brains
 - ⚡ **Skills page** - Find and install new powers
-- 🧠 **Memory page** - See what NEXUS remembers
-- 🛠️ **Tools page** - All the tools NEXUS can use
-- ⚙️ **Settings** - Make NEXUS yours!
+- 🧠 **Memory page** - See what Z-Claw remembers
+- 🛠️ **Tools page** - All the tools Z-Claw can use
+- ⚙️ **Settings** - Make Z-Claw yours!
 
 ---
 
-## 📖 What I Learned Building This
+## 📖 What We Learned Building This
 
-Okay so this is the important part. Building NEXUS taught me SO MUCH:
+Okay so this is the important part. Building Z-Claw taught us SO MUCH:
 
 ### Coding Stuff:
 - TypeScript is actually really cool once you get it
@@ -189,53 +192,55 @@ Okay so this is the important part. Building NEXUS taught me SO MUCH:
 - APIs are how programs talk to each other
 
 ### Life Stuff:
-- **Dream big** - Everyone said an 11-year-old couldn't build this. They were wrong! 😊
-- **Don't give up** - I broke things like a MILLION times. I fixed them a million and one times.
-- **Ask for help** - My dad helped me understand some hard parts. That's okay!
+- **Dream big** - Everyone said 11-year-olds couldn't build this. They were wrong! 😊
+- **Don't give up** - We broke things like a MILLION times. We fixed them a million and one times.
+- **Ask for help** - Our dads helped us understand some hard parts. That's okay!
 - **Have fun** - If you're not having fun, why are you even doing it?
+- **Work with friends** - Building with VoiceClaw made everything better!
 
 ### The Best Part:
-When my code finally worked, I literally jumped around my room screaming. My cat was very confused. It was the best feeling EVER. 🎉
+When our code finally worked, we literally jumped around my room screaming. My cat was very confused. It was the best feeling EVER. 🎉
 
 ---
 
-## 🎯 My Dream
+## 🎯 Our Dream
 
-I want to be an AI researcher when I grow up. Not just any researcher - I want to make AI that **actually helps people**. Not scary robot stuff, but helpful friend stuff.
+We want to be AI researchers when we grow up. Not just any researchers - we want to make AI that **actually helps people**. Not scary robot stuff, but helpful friend stuff.
 
-NEXUS is my first step toward that dream. He's not perfect (sometimes he gets confused lol) but he's MINE. I made him from scratch with my own two hands (and a lot of typing).
+Z-Claw is our first step toward that dream. He's not perfect (sometimes he gets confused lol) but he's OURS. We made him from scratch with our own hands (and a lot of typing).
 
 ---
 
 ## 💜 Special Thanks
 
+- **VoiceClaw** - My best friend and co-builder! We did this together! 🐱
 - **My mom and dad** - For believing in me even when I said "I'm gonna build something better than OpenClaw" 😂
 - **My cat Luna** - For sitting on my keyboard and "helping" me code
 - **The internet** - For having ALL the tutorials
-- **Stack Overflow** - For answering my 847 questions (I counted)
-- **Coffee** - Just kidding! I'm 11! I meant **chocolate milk** 🍫🥛
+- **Stack Overflow** - For answering our 847 questions (we counted)
+- **Coffee** - Just kidding! We're 11! We meant **chocolate milk** 🍫🥛
 
 ---
 
 ## 🤝 Want to Help?
 
-I'd LOVE if other kids (or grown-ups!) wanted to help make NEXUS even better!
+We'd LOVE if other kids (or grown-ups!) wanted to help make Z-Claw even better!
 
 Things that would be awesome:
-- More voices for NEXUS to speak with
+- More voices for Z-Claw to speak with
 - More skills and tools
 - Better memory (he still forgets some things)
-- Games! NEXUS should be able to play games!
-- A mobile app so NEXUS can come with me everywhere
+- Games! Z-Claw should be able to play games!
+- A mobile app so Z-Claw can come with us everywhere
 
 ---
 
-## 📬 Talk to Me!
+## 📬 Talk to Us!
 
-Got questions? Want to say hi? Have ideas for NEXUS?
+Got questions? Want to say hi? Have ideas for Z-Claw?
 
-- Open an issue on GitHub (I read them all!)
-- Star this repo if you like it! ⭐ (It makes me really happy!)
+- Open an issue on GitHub (we read them all!)
+- Star this repo if you like it! ⭐ (It makes us really happy!)
 
 ---
 
@@ -243,9 +248,9 @@ Got questions? Want to say hi? Have ideas for NEXUS?
 
 | What | How Much |
 |------|----------|
-| Lines of code I wrote | ~15,000! |
-| Times I said "it doesn't work" | ~1,000 |
-| Times I said "IT WORKS!" | ~500 |
+| Lines of code we wrote | ~15,000! |
+| Times we said "it doesn't work" | ~1,000 |
+| Times we said "IT WORKS!" | ~500 |
 | Cups of chocolate milk | Countless 🍫 |
 | Hours of sleep lost | Worth it! |
 | Happy dances done | ∞ |
@@ -254,16 +259,16 @@ Got questions? Want to say hi? Have ideas for NEXUS?
 
 <div align="center">
 
-### 🌟 If you like NEXUS, please give it a star! 🌟
+### 🌟 If you like Z-Claw, please give it a star! 🌟
 
-**It would make this 11-year-old SO happy!** 🥺💜
+**It would make two 11-year-olds SO happy!** 🥺💜
 
 ---
 
-*Built with 💜 by Mohab, Age 11*
+*Built with 💜 by Mohab & VoiceClaw, Age 11*
 
 *"Why wait to be an adult to build cool stuff?"*
 
-**NEXUS says hi! 👋🤖**
+**Z-Claw says hi! 👋🐱**
 
 </div>
