@@ -20,7 +20,7 @@ import {
   GitBranch, Shield, BarChart3, Search, Download, Upload,
   Terminal, Globe, Code, FileText, MessageSquare, Activity,
   CheckCircle2, XCircle, Clock, DollarSign, Cpu, HardDrive,
-  RefreshCw, Trash2, Plus, ChevronRight, AlertTriangle, Info
+  RefreshCw, Trash2, Plus, ChevronRight, AlertTriangle, Info, Key
 } from 'lucide-react';
 
 // Types
@@ -60,6 +60,12 @@ interface MemoryStats {
   preferences: number;
 }
 
+interface ApiKey {
+  provider: string;
+  configured: boolean;
+  masked?: string;
+}
+
 interface DashboardStats {
   totalRuns: number;
   successRate: number;
@@ -86,15 +92,19 @@ export default function ZClawDashboard() {
   const [privacyMode, setPrivacyMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
+  const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+  const [newKeyValue, setNewKeyValue] = useState('');
 
   // Fetch dashboard data
   const fetchDashboardData = useCallback(async () => {
     try {
-      const [agentRes, providersRes, skillsRes, memoryRes] = await Promise.all([
+      const [agentRes, providersRes, skillsRes, memoryRes, keysRes] = await Promise.all([
         fetch('/api/agent'),
         fetch('/api/providers'),
         fetch('/api/skills?installed=true'),
         fetch('/api/memory'),
+        fetch('/api/keys'),
       ]);
 
       if (agentRes.ok) {
@@ -116,6 +126,11 @@ export default function ZClawDashboard() {
       if (memoryRes.ok) {
         const data = await memoryRes.json();
         setMemoryStats(data.stats);
+      }
+
+      if (keysRes.ok) {
+        const data = await keysRes.json();
+        setApiKeys(data.keys || []);
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
@@ -212,6 +227,28 @@ export default function ZClawDashboard() {
     }
   };
 
+  // Save API key
+  const saveApiKey = async (provider: string, key: string) => {
+    try {
+      const response = await fetch('/api/keys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'set', provider, key }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setNotification({ type: 'success', message: `API key for ${provider} saved!` });
+        fetchDashboardData();
+        setEditingKey(null);
+        setNewKeyValue('');
+      } else {
+        setNotification({ type: 'error', message: result.error || 'Failed to save key' });
+      }
+    } catch (error) {
+      setNotification({ type: 'error', message: 'Failed to save API key' });
+    }
+  };
+
   // Clear notification after 5 seconds
   useEffect(() => {
     if (notification) {
@@ -297,6 +334,10 @@ export default function ZClawDashboard() {
             <TabsTrigger value="tools" className="gap-2">
               <Terminal className="w-4 h-4" />
               Tools
+            </TabsTrigger>
+            <TabsTrigger value="keys" className="gap-2">
+              <Key className="w-4 h-4" />
+              API Keys
             </TabsTrigger>
             <TabsTrigger value="settings" className="gap-2">
               <Settings className="w-4 h-4" />
@@ -766,6 +807,101 @@ export default function ZClawDashboard() {
                 </Card>
               ))}
             </div>
+          </TabsContent>
+
+          {/* API Keys Tab */}
+          <TabsContent value="keys" className="space-y-6">
+            <Card className="bg-gray-800/50 border-gray-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Key className="w-5 h-5 text-amber-400" />
+                  API Keys Configuration
+                </CardTitle>
+                <CardDescription>Configure your AI provider API keys. Keys are stored securely and masked for display.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-[400px]">
+                  <div className="space-y-3">
+                    {apiKeys.map((apiKey) => (
+                      <div key={apiKey.provider} className="flex items-center gap-4 p-4 rounded-lg bg-gray-900/50 border border-gray-600">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium capitalize">{apiKey.provider}</span>
+                            {apiKey.configured ? (
+                              <Badge variant="default" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Configured</Badge>
+                            ) : (
+                              <Badge variant="destructive" className="bg-red-500/20 text-red-400 border-red-500/30">Not Set</Badge>
+                            )}
+                          </div>
+                          {apiKey.configured && apiKey.masked && (
+                            <p className="text-xs text-gray-500 mt-1">{apiKey.masked}</p>
+                          )}
+                        </div>
+                        
+                        {editingKey === apiKey.provider ? (
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="password"
+                              placeholder="Enter new API key..."
+                              value={newKeyValue}
+                              onChange={(e) => setNewKeyValue(e.target.value)}
+                              className="bg-gray-800 border-gray-600 w-64"
+                            />
+                            <Button 
+                              size="sm" 
+                              onClick={() => saveApiKey(apiKey.provider, newKeyValue)}
+                              disabled={!newKeyValue.trim()}
+                            >
+                              Save
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              onClick={() => { setEditingKey(null); setNewKeyValue(''); }}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        ) : (
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => setEditingKey(apiKey.provider)}
+                          >
+                            {apiKey.configured ? 'Update' : 'Add Key'}
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gray-800/50 border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-sm font-medium">Need API Keys?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-xs">
+                  <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-900/50 hover:bg-gray-700/50 text-center transition-colors">
+                    Anthropic
+                  </a>
+                  <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-900/50 hover:bg-gray-700/50 text-center transition-colors">
+                    OpenAI
+                  </a>
+                  <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-900/50 hover:bg-gray-700/50 text-center transition-colors">
+                    Groq
+                  </a>
+                  <a href="https://console.mistral.ai/" target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-900/50 hover:bg-gray-700/50 text-center transition-colors">
+                    Mistral
+                  </a>
+                  <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-900/50 hover:bg-gray-700/50 text-center transition-colors">
+                    Google AI
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Settings Tab */}
