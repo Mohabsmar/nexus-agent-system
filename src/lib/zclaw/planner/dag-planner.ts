@@ -38,7 +38,7 @@ export class TaskPlanner {
     }
 
     // Identify parallel groups (nodes that can run simultaneously)
-    const parallelGroups = this.identParallelGroups(nodeMap, edges);
+    const parallelGroups = this.identifyParallelGroups(nodeMap, edges);
 
     this.currentDAG = {
       id: dagId,
