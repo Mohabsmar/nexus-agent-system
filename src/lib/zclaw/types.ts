@@ -388,3 +388,365 @@ export interface ZClawConfig {
   dashboardPort: number;
   dataDir: string;
 }
+
+// ==================== Marketplace Types ====================
+
+export type MarketplaceCategory = 
+  | 'skills' 
+  | 'agents' 
+  | 'plugins' 
+  | 'templates' 
+  | 'providers' 
+  | 'themes' 
+  | 'workflows' 
+  | 'prompts' 
+  | 'voices' 
+  | 'integrations';
+
+export type MarketplaceSort = 'popular' | 'recent' | 'rating' | 'downloads' | 'name';
+
+export interface MarketplaceItem {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  longDescription?: string;
+  category: MarketplaceCategory;
+  source: MarketplaceSource;
+  version: string;
+  author: AuthorInfo;
+  rating: number;
+  reviewCount: number;
+  installCount: number;
+  downloadCount: number;
+  installed: boolean;
+  featured: boolean;
+  verified: boolean;
+  price: 'free' | 'freemium' | 'paid';
+  priceAmount?: number;
+  currency?: string;
+  tags: string[];
+  capabilities: string[];
+  dependencies: string[];
+  compatibility: CompatibilityInfo;
+  screenshots?: string[];
+  documentationUrl?: string;
+  repositoryUrl?: string;
+  homepageUrl?: string;
+  license: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt?: Date;
+  config?: Record<string, unknown>;
+}
+
+export interface AuthorInfo {
+  id: string;
+  name: string;
+  username: string;
+  avatar?: string;
+  verified: boolean;
+  partner: boolean;
+  bio?: string;
+  website?: string;
+  github?: string;
+  twitter?: string;
+}
+
+export interface CompatibilityInfo {
+  minVersion: string;
+  maxVersion?: string;
+  platforms: ('macos' | 'windows' | 'linux' | 'web')[];
+  requires: string[];
+}
+
+export interface MarketplaceReview {
+  id: string;
+  itemId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  rating: number;
+  title: string;
+  content: string;
+  helpful: number;
+  verified: boolean;
+  createdAt: Date;
+  reply?: {
+    author: string;
+    content: string;
+    createdAt: Date;
+  };
+}
+
+export interface MarketplaceCollection {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  curator: AuthorInfo;
+  itemCount: number;
+  followers: number;
+  items: MarketplaceItem[];
+  tags: string[];
+  featured: boolean;
+  createdAt: Date;
+}
+
+export interface MarketplaceSearchFilters {
+  query?: string;
+  category?: MarketplaceCategory;
+  source?: MarketplaceSource;
+  tags?: string[];
+  author?: string;
+  price?: ('free' | 'freemium' | 'paid')[];
+  rating?: number;
+  installed?: boolean;
+  featured?: boolean;
+  verified?: boolean;
+  compatible?: boolean;
+  sortBy?: MarketplaceSort;
+  sortOrder?: 'asc' | 'desc';
+  limit?: number;
+  offset?: number;
+}
+
+export interface MarketplaceSearchResult {
+  items: MarketplaceItem[];
+  total: number;
+  page: number;
+  pageSize: number;
+  hasMore: boolean;
+  aggregations: {
+    categories: Record<MarketplaceCategory, number>;
+    sources: Record<MarketplaceSource, number>;
+    tags: Array<{ tag: string; count: number }>;
+  };
+}
+
+// ==================== Agent Marketplace Types ====================
+
+export interface AgentTemplate extends MarketplaceItem {
+  category: 'agents';
+  role: SubAgentRole;
+  systemPrompt: string;
+  defaultModel: string;
+  defaultProvider: ProviderName;
+  tools: string[];
+  skills: string[];
+  behavior: AgentBehavior;
+  examples: AgentExample[];
+}
+
+export interface AgentBehavior {
+  temperature: number;
+  maxTokens: number;
+  responseStyle: 'concise' | 'detailed' | 'balanced';
+  reasoning: boolean;
+  streaming: boolean;
+  voiceEnabled: boolean;
+}
+
+export interface AgentExample {
+  input: string;
+  output: string;
+  description: string;
+}
+
+// ==================== Plugin Marketplace Types ====================
+
+export interface Plugin extends MarketplaceItem {
+  category: 'plugins';
+  type: 'extension' | 'integration' | 'channel' | 'provider';
+  entrypoint: string;
+  permissions: string[];
+  settings: PluginSetting[];
+  hooks: PluginHook[];
+}
+
+export interface PluginSetting {
+  key: string;
+  type: 'string' | 'number' | 'boolean' | 'select' | 'multiselect' | 'password';
+  label: string;
+  description?: string;
+  default?: unknown;
+  options?: Array<{ label: string; value: string }>;
+  required: boolean;
+  secret: boolean;
+}
+
+export interface PluginHook {
+  event: string;
+  handler: string;
+  priority: number;
+}
+
+// ==================== Template Marketplace Types ====================
+
+export interface Template extends MarketplaceItem {
+  category: 'templates';
+  type: 'project' | 'workflow' | 'agent-config' | 'skill-config';
+  files: TemplateFile[];
+  variables: TemplateVariable[];
+  postInstall?: string[];
+}
+
+export interface TemplateFile {
+  path: string;
+  content: string;
+  type: 'text' | 'binary' | 'template';
+}
+
+export interface TemplateVariable {
+  key: string;
+  type: 'string' | 'number' | 'boolean' | 'select';
+  label: string;
+  description?: string;
+  default?: unknown;
+  options?: string[];
+  required: boolean;
+  validation?: string;
+}
+
+// ==================== Workflow Marketplace Types ====================
+
+export interface Workflow extends MarketplaceItem {
+  category: 'workflows';
+  nodes: WorkflowNode[];
+  edges: WorkflowEdge[];
+  triggers: WorkflowTrigger[];
+  variables: Record<string, unknown>;
+}
+
+export interface WorkflowNode {
+  id: string;
+  type: string;
+  position: { x: number; y: number };
+  data: Record<string, unknown>;
+  config: Record<string, unknown>;
+}
+
+export interface WorkflowEdge {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string;
+  targetHandle?: string;
+  condition?: string;
+}
+
+export interface WorkflowTrigger {
+  type: 'manual' | 'schedule' | 'webhook' | 'event' | 'voice';
+  config: Record<string, unknown>;
+}
+
+// ==================== Prompt Marketplace Types ====================
+
+export interface PromptTemplate extends MarketplaceItem {
+  category: 'prompts';
+  content: string;
+  variables: string[];
+  examples: PromptExample[];
+  category_tags: string[];
+}
+
+export interface PromptExample {
+  variables: Record<string, string>;
+  output: string;
+}
+
+// ==================== Voice Marketplace Types ====================
+
+export interface VoicePack extends MarketplaceItem {
+  category: 'voices';
+  provider: TTSProvider;
+  voiceId: string;
+  preview?: string;
+  languages: string[];
+  gender: 'male' | 'female' | 'neutral';
+  age: 'young' | 'adult' | 'senior';
+  accent?: string;
+  style: string[];
+}
+
+// ==================== Integration Marketplace Types ====================
+
+export interface Integration extends MarketplaceItem {
+  category: 'integrations';
+  service: string;
+  authType: 'oauth' | 'api_key' | 'basic' | 'none';
+  scopes: string[];
+  setupSteps: IntegrationStep[];
+  webhooks?: WebhookConfig[];
+}
+
+export interface IntegrationStep {
+  order: number;
+  title: string;
+  description: string;
+  action: 'redirect' | 'input' | 'confirm' | 'wait';
+  url?: string;
+  fields?: IntegrationField[];
+}
+
+export interface IntegrationField {
+  key: string;
+  label: string;
+  type: 'text' | 'password' | 'url' | 'select';
+  required: boolean;
+  placeholder?: string;
+}
+
+export interface WebhookConfig {
+  event: string;
+  description: string;
+  payloadExample?: Record<string, unknown>;
+}
+
+// ==================== Theme Marketplace Types ====================
+
+export interface Theme extends MarketplaceItem {
+  category: 'themes';
+  type: 'light' | 'dark' | 'system';
+  colors: ThemeColors;
+  fonts: ThemeFonts;
+  customCss?: string;
+}
+
+export interface ThemeColors {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  foreground: string;
+  muted: string;
+  border: string;
+  [key: string]: string;
+}
+
+export interface ThemeFonts {
+  heading: string;
+  body: string;
+  mono: string;
+}
+
+// ==================== Marketplace Stats Types ====================
+
+export interface MarketplaceStats {
+  totalItems: number;
+  totalDownloads: number;
+  totalReviews: number;
+  categories: Record<MarketplaceCategory, number>;
+  trending: MarketplaceItem[];
+  featured: MarketplaceItem[];
+  newReleases: MarketplaceItem[];
+  topAuthors: AuthorInfo[];
+}
+
+export interface MarketplaceInstallResult {
+  success: boolean;
+  item?: MarketplaceItem;
+  error?: string;
+  installPath?: string;
+  postInstallSteps?: string[];
+}

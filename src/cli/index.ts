@@ -159,6 +159,15 @@ function showHelp(theme: ReturnType<typeof getTheme>) {
   console.log('    providers   List AI providers');
   console.log('    keys        Manage API keys');
   console.log('    skills      Browse & install skills');
+  console.log('    marketplace Browse full marketplace');
+  console.log('    agents      Browse AI agents');
+  console.log('    plugins     Browse plugins');
+  console.log('    templates   Browse templates');
+  console.log('    workflows   Browse workflows');
+  console.log('    prompts     Browse prompt templates');
+  console.log('    voices      Browse voice packs');
+  console.log('    integrations Browse integrations');
+  console.log('    themes      Browse themes');
   console.log('    stats       Show usage statistics');
   console.log('    config      View/edit configuration');
   console.log('    setup       Run setup wizard again');
@@ -170,6 +179,7 @@ function showHelp(theme: ReturnType<typeof getTheme>) {
   console.log('    Build a REST API with auth');
   console.log('    run Create a React todo app');
   console.log('    chat');
+  console.log('    marketplace (or mp)');
   console.log();
 }
 
@@ -506,6 +516,329 @@ async function showSkills(theme: ReturnType<typeof getTheme>) {
   }
 }
 
+// ==================== Marketplace Commands ====================
+
+const MARKETPLACE_CATEGORIES = [
+  { id: 'agents', name: 'Agents', icon: '🤖', description: 'Pre-configured AI agents for specific tasks' },
+  { id: 'skills', name: 'Skills', icon: '⚡', description: 'Extend Z-Claw with new capabilities' },
+  { id: 'plugins', name: 'Plugins', icon: '🔌', description: 'Integrations and extensions' },
+  { id: 'templates', name: 'Templates', icon: '📄', description: 'Project and workflow templates' },
+  { id: 'workflows', name: 'Workflows', icon: '🔄', description: 'Automated workflows and pipelines' },
+  { id: 'prompts', name: 'Prompts', icon: '💬', description: 'Pre-built prompt templates' },
+  { id: 'voices', name: 'Voices', icon: '🗣️', description: 'Voice packs for TTS' },
+  { id: 'integrations', name: 'Integrations', icon: '🔗', description: 'Connect with external services' },
+  { id: 'themes', name: 'Themes', icon: '🎨', description: 'UI themes and color schemes' },
+];
+
+async function showMarketplace(theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary('  🛒 Z-Claw Marketplace'));
+  console.log(theme.secondary('  ─'.repeat(50)));
+  console.log(theme.secondary('  Discover and install extensions for Z-Claw'));
+  console.log();
+
+  const { action } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'action',
+      message: 'What would you like to explore?',
+      choices: [
+        ...MARKETPLACE_CATEGORIES.map(c => ({
+          name: `${c.icon} ${c.name.padEnd(15)} ${theme.secondary(c.description)}`,
+          value: c.id,
+        })),
+        new inquirer.Separator(),
+        { name: '🔍 Search all items', value: 'search' },
+        { name: '⭐ Featured items', value: 'featured' },
+        { name: '📈 Trending now', value: 'trending' },
+        { name: '🆕 New releases', value: 'new' },
+        { name: '📦 Installed items', value: 'installed' },
+        new inquirer.Separator(),
+        { name: '← Back', value: 'back' },
+      ],
+    },
+  ]);
+
+  if (action === 'back') return;
+
+  if (action === 'search') {
+    await searchMarketplace(theme);
+  } else if (action === 'featured') {
+    await showFeaturedItems(theme);
+  } else if (action === 'trending') {
+    await showTrendingItems(theme);
+  } else if (action === 'new') {
+    await showNewReleases(theme);
+  } else if (action === 'installed') {
+    await showInstalledItems(theme);
+  } else {
+    await browseCategory(action, theme);
+  }
+}
+
+async function searchMarketplace(theme: ReturnType<typeof getTheme>) {
+  const { query } = await inquirer.prompt([{
+    type: 'input',
+    name: 'query',
+    message: 'Search marketplace:',
+  }]);
+
+  const spinner = ora('Searching...').start();
+  await new Promise(r => setTimeout(r, 800));
+  spinner.stop();
+
+  console.log();
+  console.log(theme.primary(`  Results for "${query}":`));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  // Simulated search results
+  const results = [
+    { name: 'Code Review Agent', category: 'agents', rating: 4.9, installed: false },
+    { name: 'GitHub Integration', category: 'plugins', rating: 4.8, installed: true },
+    { name: 'API Template', category: 'templates', rating: 4.6, installed: false },
+  ];
+
+  results.forEach((r, i) => {
+    const status = r.installed ? '✅' : '⬜';
+    console.log(`    ${status} ${i + 1}. ${r.name} (${r.category}) ★ ${r.rating}`);
+  });
+
+  if (results.length === 0) {
+    console.log(theme.secondary('  No results found.'));
+  }
+
+  console.log();
+}
+
+async function showFeaturedItems(theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary('  ⭐ Featured Items'));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  const featured = [
+    { name: 'Senior Developer Agent', category: 'agents', rating: 4.9, installs: '25K' },
+    { name: 'Slack Channel Plugin', category: 'plugins', rating: 4.7, installs: '35K' },
+    { name: 'Next.js Starter Template', category: 'templates', rating: 4.9, installs: '55K' },
+    { name: 'Google Workspace Integration', category: 'integrations', rating: 4.8, installs: '52K' },
+  ];
+
+  featured.forEach((item, i) => {
+    console.log(`    ${i + 1}. ${theme.accent(item.name)} (${item.category})`);
+    console.log(theme.secondary(`       ★ ${item.rating} • ${item.installs} installs`));
+  });
+
+  console.log();
+  const { select } = await inquirer.prompt([{
+    type: 'list',
+    name: 'select',
+    message: 'Select an item to view details:',
+    choices: [...featured.map(i => i.name), '← Back'],
+  }]);
+
+  if (select !== '← Back') {
+    await showItemDetails(select, theme);
+  }
+}
+
+async function showTrendingItems(theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary('  📈 Trending Now'));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  const trending = [
+    { name: 'Data Scientist Agent', category: 'agents', growth: '+450%', rating: 4.8 },
+    { name: 'Discord Channel', category: 'plugins', growth: '+320%', rating: 4.6 },
+    { name: 'AI Chatbot Template', category: 'templates', growth: '+280%', rating: 4.8 },
+  ];
+
+  trending.forEach((item, i) => {
+    console.log(`    ${i + 1}. ${item.name} (${item.category}) ${theme.accent(item.growth)}`);
+    console.log(theme.secondary(`       ★ ${item.rating}`));
+  });
+
+  console.log();
+}
+
+async function showNewReleases(theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary('  🆕 New Releases'));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  const newItems = [
+    { name: 'Claude Opus 4.6 Agent', category: 'agents', date: 'Today', rating: 5.0 },
+    { name: 'Notion Integration', category: 'integrations', date: 'Yesterday', rating: 4.5 },
+    { name: 'Cyberpunk Theme', category: 'themes', date: '2 days ago', rating: 4.6 },
+  ];
+
+  newItems.forEach((item, i) => {
+    console.log(`    ${i + 1}. ${item.name} (${item.category}) ${theme.secondary(item.date)}`);
+    console.log(`       ★ ${item.rating}`);
+  });
+
+  console.log();
+}
+
+async function showInstalledItems(theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary('  📦 Installed Items'));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  const installed = [
+    { name: 'Code Generator', category: 'skills', version: '2.1.0' },
+    { name: 'GitHub Integration', category: 'plugins', version: '1.5.0' },
+    { name: 'Midnight Blue Theme', category: 'themes', version: '1.0.0' },
+  ];
+
+  if (installed.length === 0) {
+    console.log(theme.secondary('  No items installed yet.'));
+    console.log(theme.secondary('  Browse the marketplace to install items.'));
+  } else {
+    installed.forEach((item, i) => {
+      console.log(`    ${i + 1}. ${item.name} (${item.category}) v${item.version}`);
+    });
+  }
+
+  console.log();
+}
+
+async function browseCategory(category: string, theme: ReturnType<typeof getTheme>) {
+  const categoryInfo = MARKETPLACE_CATEGORIES.find(c => c.id === category);
+  if (!categoryInfo) return;
+
+  console.log();
+  console.log(theme.primary(`  ${categoryInfo.icon} ${categoryInfo.name}`));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  // Category-specific items
+  const categoryItems: Record<string, Array<{ name: string; rating: number; installs: string; description: string }>> = {
+    agents: [
+      { name: 'Senior Developer Agent', rating: 4.9, installs: '25K', description: 'Expert coding and architecture' },
+      { name: 'Research Analyst', rating: 4.8, installs: '18K', description: 'Web research and synthesis' },
+      { name: 'Project Manager', rating: 4.7, installs: '12K', description: 'Task and workflow management' },
+      { name: 'Data Scientist', rating: 4.8, installs: '15K', description: 'ML and data analysis' },
+    ],
+    plugins: [
+      { name: 'Slack Channel', rating: 4.7, installs: '35K', description: 'Slack workspace integration' },
+      { name: 'Discord Channel', rating: 4.6, installs: '28K', description: 'Discord bot integration' },
+      { name: 'GitHub Integration', rating: 4.9, installs: '42K', description: 'Repo and issue management' },
+      { name: 'WhatsApp Channel', rating: 4.4, installs: '24K', description: 'WhatsApp messaging' },
+    ],
+    templates: [
+      { name: 'Next.js Starter', rating: 4.9, installs: '55K', description: 'Full-stack Next.js 16' },
+      { name: 'AI Chatbot', rating: 4.8, installs: '38K', description: 'Streaming chatbot template' },
+      { name: 'API Service', rating: 4.6, installs: '22K', description: 'RESTful API with auth' },
+    ],
+    workflows: [
+      { name: 'CI/CD Pipeline', rating: 4.8, installs: '18K', description: 'Automated build & deploy' },
+      { name: 'Support Automation', rating: 4.5, installs: '12K', description: 'Customer support workflow' },
+      { name: 'Daily Reports', rating: 4.4, installs: '8K', description: 'Scheduled report gen' },
+    ],
+    prompts: [
+      { name: 'Code Review', rating: 4.9, installs: '45K', description: 'Comprehensive code review' },
+      { name: 'Tech Documentation', rating: 4.7, installs: '28K', description: 'Generate docs from code' },
+      { name: 'Creative Writer', rating: 4.6, installs: '22K', description: 'Story and content writing' },
+    ],
+    voices: [
+      { name: 'Professional Male', rating: 4.8, installs: '35K', description: 'Business voice' },
+      { name: 'Friendly Female', rating: 4.9, installs: '42K', description: 'Assistant voice' },
+      { name: 'Deep Narrator', rating: 4.6, installs: '18K', description: 'Narration voice' },
+    ],
+    integrations: [
+      { name: 'Google Workspace', rating: 4.8, installs: '52K', description: 'Drive, Docs, Calendar' },
+      { name: 'Microsoft 365', rating: 4.6, installs: '38K', description: 'Teams, Outlook, OneDrive' },
+      { name: 'Jira', rating: 4.5, installs: '25K', description: 'Issue tracking' },
+    ],
+    themes: [
+      { name: 'Midnight Blue', rating: 4.9, installs: '48K', description: 'Elegant dark theme' },
+      { name: 'Sunset Orange', rating: 4.7, installs: '32K', description: 'Warm light theme' },
+      { name: 'Cyberpunk Neon', rating: 4.6, installs: '28K', description: 'Futuristic neon' },
+    ],
+  };
+
+  const items = categoryItems[category] || [];
+
+  items.forEach((item, i) => {
+    console.log(`    ${i + 1}. ${theme.accent(item.name)} ★ ${item.rating}`);
+    console.log(theme.secondary(`       ${item.description} • ${item.installs} installs`));
+  });
+
+  console.log();
+  const { action } = await inquirer.prompt([{
+    type: 'list',
+    name: 'action',
+    message: 'What would you like to do?',
+    choices: [
+      { name: 'View item details', value: 'view' },
+      { name: 'Install an item', value: 'install' },
+      { name: '← Back to marketplace', value: 'back' },
+    ],
+  }]);
+
+  if (action === 'view' || action === 'install') {
+    const { item } = await inquirer.prompt([{
+      type: 'list',
+      name: 'item',
+      message: action === 'view' ? 'Select item to view:' : 'Select item to install:',
+      choices: [...items.map(i => i.name), '← Back'],
+    }]);
+
+    if (item !== '← Back') {
+      if (action === 'install') {
+        const spinner = ora(`Installing ${item}...`).start();
+        await new Promise(r => setTimeout(r, 1500));
+        spinner.succeed(`${item} installed successfully!`);
+        console.log(theme.secondary(`  Run "z-claw ${category}" to use it.`));
+      } else {
+        await showItemDetails(item, theme);
+      }
+    }
+  }
+}
+
+async function showItemDetails(itemName: string, theme: ReturnType<typeof getTheme>) {
+  console.log();
+  console.log(theme.primary(`  📦 ${itemName}`));
+  console.log(theme.secondary('  ─'.repeat(40)));
+
+  // Simulated item details
+  console.log(`    Version:     1.0.0`);
+  console.log(`    Rating:      ★ 4.8 (245 reviews)`);
+  console.log(`    Installs:    25,420`);
+  console.log(`    License:     MIT`);
+  console.log();
+  console.log(theme.primary('  Description:'));
+  console.log(theme.secondary('    This is a sample item with detailed information about its'));
+  console.log(theme.secondary('    capabilities and use cases.'));
+  console.log();
+  console.log(theme.primary('  Features:'));
+  console.log('    • Feature 1');
+  console.log('    • Feature 2');
+  console.log('    • Feature 3');
+  console.log();
+
+  const { action } = await inquirer.prompt([{
+    type: 'list',
+    name: 'action',
+    message: 'Actions:',
+    choices: [
+      { name: '📥 Install', value: 'install' },
+      { name: '⭐ Add to favorites', value: 'favorite' },
+      { name: '📖 View documentation', value: 'docs' },
+      { name: '← Back', value: 'back' },
+    ],
+  }]);
+
+  if (action === 'install') {
+    const spinner = ora(`Installing ${itemName}...`).start();
+    await new Promise(r => setTimeout(r, 1500));
+    spinner.succeed(`${itemName} installed successfully!`);
+  } else if (action === 'favorite') {
+    console.log(theme.primary(`  ⭐ ${itemName} added to favorites!`));
+  } else if (action === 'docs') {
+    console.log(theme.secondary('  Opening documentation in browser...'));
+  }
+}
+
 // Interactive REPL
 async function startREPL() {
   const theme = getTheme();
@@ -574,6 +907,44 @@ async function startREPL() {
 
       case 'skills':
         await showSkills(theme);
+        break;
+
+      case 'marketplace':
+      case 'market':
+      case 'mp':
+        await showMarketplace(theme);
+        break;
+
+      case 'agents':
+        await browseCategory('agents', theme);
+        break;
+
+      case 'plugins':
+        await browseCategory('plugins', theme);
+        break;
+
+      case 'templates':
+        await browseCategory('templates', theme);
+        break;
+
+      case 'workflows':
+        await browseCategory('workflows', theme);
+        break;
+
+      case 'prompts':
+        await browseCategory('prompts', theme);
+        break;
+
+      case 'voices':
+        await browseCategory('voices', theme);
+        break;
+
+      case 'integrations':
+        await browseCategory('integrations', theme);
+        break;
+
+      case 'themes':
+        await browseCategory('themes', theme);
         break;
 
       case 'setup':

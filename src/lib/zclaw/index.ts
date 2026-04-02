@@ -7,6 +7,7 @@ import { MemoryEngine, getMemory } from './memory/memory-engine';
 import { ToolRegistry, getToolRegistry } from './tools/tool-registry';
 import { VoiceLayer, getVoiceLayer } from './voice/voice-layer';
 import { SkillMarketplace, getMarketplace } from './marketplaces/skill-marketplace';
+import { UnifiedMarketplace, getUnifiedMarketplace } from './marketplaces/unified-marketplace';
 import { SecurityManager, getSecurityManager } from './security/security-manager';
 import { EvaluationEngine, getEvaluator } from './core/evaluation';
 import { CheckpointManager, getCheckpointManager } from './core/checkpoint';
@@ -19,6 +20,16 @@ import {
   ProviderName,
   Checkpoint,
   DashboardStats,
+  MarketplaceCategory,
+  MarketplaceItem,
+  AgentTemplate,
+  Plugin,
+  Template,
+  Workflow,
+  PromptTemplate,
+  VoicePack,
+  Integration,
+  Theme,
 } from './types';
 import { randomUUID } from 'crypto';
 
@@ -29,6 +40,7 @@ export class ZClawAgent {
   private tools: ToolRegistry;
   private voice: VoiceLayer;
   private marketplace: SkillMarketplace;
+  private unifiedMarketplace: UnifiedMarketplace;
   private security: SecurityManager;
   private evaluator: EvaluationEngine;
   private checkpoints: CheckpointManager;
@@ -43,6 +55,7 @@ export class ZClawAgent {
     this.tools = getToolRegistry();
     this.voice = getVoiceLayer();
     this.marketplace = getMarketplace();
+    this.unifiedMarketplace = getUnifiedMarketplace();
     this.security = getSecurityManager();
     this.evaluator = getEvaluator();
     this.checkpoints = getCheckpointManager();
@@ -312,6 +325,7 @@ export class ZClawAgent {
   getTools(): ToolRegistry { return this.tools; }
   getVoice(): VoiceLayer { return this.voice; }
   getMarketplace(): SkillMarketplace { return this.marketplace; }
+  getUnifiedMarketplace(): UnifiedMarketplace { return this.unifiedMarketplace; }
   getSecurity(): SecurityManager { return this.security; }
   getEvaluator(): EvaluationEngine { return this.evaluator; }
   getCheckpoints(): CheckpointManager { return this.checkpoints; }

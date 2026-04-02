@@ -45,25 +45,144 @@ npx z-claw --run "Build a REST API with auth"
 - **💾 Persistent Memory** - Remembers everything across sessions
 - **🔌 8+ AI Providers** - Claude, GPT, Groq, Gemini, and more
 - **🎤 Voice Mode** - Speak and listen to your AI
-- **🛠️ Skill Marketplace** - Install new abilities from ClawdHub, Smithery, npm
+- **🛒 Massive Marketplace** - Skills, Agents, Plugins, Templates, and more!
+
+---
+
+## 🛒 Z-Claw Marketplace
+
+The **biggest AI agent marketplace** with 10 categories:
+
+### 🤖 Agents
+Pre-configured AI agents for specific tasks:
+- Senior Developer Agent - Expert coding & architecture
+- Research Analyst - Web research & synthesis
+- Project Manager - Task & workflow management
+- Data Scientist - ML & data analysis
+- Creative Writer - Content & storytelling
+
+### ⚡ Skills
+Extend Z-Claw with new capabilities from multiple sources:
+- ClawdHub (39,000+ skills)
+- Smithery (MCP servers)
+- npm Registry
+- GitHub
+- Composio
+
+### 🔌 Plugins
+Integrations and extensions:
+- Slack Channel - Workspace messaging
+- Discord Channel - Bot integration
+- GitHub Integration - Repo & issue management
+- WhatsApp Channel - Personal messaging
+- Notion Integration - Notes & databases
+
+### 📄 Templates
+Project and workflow templates:
+- Next.js 16 Starter - Full-stack with TypeScript
+- AI Chatbot Template - Streaming chatbot
+- API Service Template - RESTful with auth
+
+### 🔄 Workflows
+Automated workflows and pipelines:
+- CI/CD Pipeline - Build & deploy automation
+- Support Automation - Customer service AI
+- Daily Reports - Scheduled generation
+
+### 💬 Prompts
+Pre-built prompt templates:
+- Code Review - Security & performance analysis
+- Tech Documentation - Generate from code
+- Creative Writer - Story & content
+
+### 🗣️ Voices
+Voice packs for text-to-speech:
+- Professional Male - Business voice
+- Friendly Female - Assistant voice
+- Deep Narrator - Presentation voice
+
+### 🔗 Integrations
+Connect with external services:
+- Google Workspace - Drive, Docs, Calendar
+- Microsoft 365 - Teams, Outlook, OneDrive
+- Jira - Issue tracking
+
+### 🎨 Themes
+UI themes and color schemes:
+- Midnight Blue - Elegant dark theme
+- Sunset Orange - Warm light theme
+- Cyberpunk Neon - Futuristic neon
 
 ---
 
 ## 📋 Commands
 
-| Command | Description |
-|---------|-------------|
-| `help` | Show all commands |
-| `run <goal>` | Execute a task |
-| `chat` | Interactive chat mode |
-| `providers` | List AI providers |
-| `keys` | Manage API keys |
-| `skills` | Browse skill marketplace |
-| `stats` | Usage statistics |
-| `config` | View/edit settings |
-| `setup` | Run setup wizard |
-| `clear` | Clear screen |
-| `exit` | Exit Z-Claw |
+| Command | Alias | Description |
+|---------|-------|-------------|
+| `help` | | Show all commands |
+| `run <goal>` | | Execute a task |
+| `chat` | | Interactive chat mode |
+| `marketplace` | `mp`, `market` | Browse full marketplace |
+| `agents` | | Browse AI agents |
+| `plugins` | | Browse plugins |
+| `templates` | | Browse templates |
+| `workflows` | | Browse workflows |
+| `prompts` | | Browse prompt templates |
+| `voices` | | Browse voice packs |
+| `integrations` | | Browse integrations |
+| `themes` | | Browse themes |
+| `skills` | | Browse skill marketplace |
+| `providers` | | List AI providers |
+| `keys` | | Manage API keys |
+| `stats` | | Usage statistics |
+| `config` | | View/edit settings |
+| `setup` | | Run setup wizard |
+| `clear` | | Clear screen |
+| `exit` | `q`, `quit` | Exit Z-Claw |
+
+---
+
+## 🔌 API Endpoints
+
+Z-Claw exposes REST API endpoints for programmatic access:
+
+### Marketplace API
+```
+GET  /api/marketplace              # Search marketplace
+GET  /api/marketplace?action=stats # Get marketplace stats
+GET  /api/marketplace?action=featured # Get featured items
+GET  /api/marketplace?action=trending # Get trending items
+GET  /api/marketplace?action=new-releases # Get new releases
+GET  /api/marketplace?action=installed # Get installed items
+GET  /api/marketplace/[slug]       # Get specific item
+POST /api/marketplace/[slug]       # Install item
+DELETE /api/marketplace/[slug]     # Uninstall item
+
+GET  /api/marketplace/agents       # List all agents
+GET  /api/marketplace/plugins      # List all plugins
+GET  /api/marketplace/templates    # List all templates
+GET  /api/marketplace/workflows    # List all workflows
+GET  /api/marketplace/prompts      # List all prompts
+GET  /api/marketplace/voices       # List all voices
+GET  /api/marketplace/integrations # List all integrations
+GET  /api/marketplace/themes       # List all themes
+```
+
+### Query Parameters
+```
+q           - Search query
+category    - Filter by category
+source      - Filter by source (clawdhub, smithery, npm, github)
+tags        - Filter by tags (comma-separated)
+author      - Filter by author
+price       - Filter by price (free, freemium, paid)
+rating      - Minimum rating
+installed   - Show only installed (true/false)
+featured    - Show only featured (true/false)
+sort        - Sort by (popular, recent, rating, downloads, name)
+limit       - Results per page (default: 20)
+offset      - Pagination offset
+```
 
 ---
 
@@ -125,29 +244,43 @@ Type "help" to see available commands
   Hello Mohab! I'm Z-Claw, your AI assistant.
   Type your goal or "help" for commands.
 
-Mohab@z-claw ❯ Build a REST API with authentication
+Mohab@z-claw ❯ marketplace
 
-⠋ Planning task...
-✅ Task completed!
+  🛒 Z-Claw Marketplace
+  ──────────────────────────────────────────────────
+  Discover and install extensions for Z-Claw
 
-  Result:
-  ────────────────────────────────────────
-    Status:     ✅ Completed
-    Duration:   3.42s
-    Tokens:     1,247
-    Cost:       $0.0012
-    Provider:   anthropic
+? What would you like to explore?
+  🤖 Agents        Pre-configured AI agents
+  ⚡ Skills        Extend Z-Claw capabilities
+  🔌 Plugins       Integrations and extensions
+  📄 Templates     Project templates
+  🔄 Workflows     Automated pipelines
+  💬 Prompts       Pre-built prompts
+  🗣️ Voices        Voice packs for TTS
+  🔗 Integrations  External services
+  🎨 Themes        UI themes
+  🔍 Search all items
+  ⭐ Featured items
+  📈 Trending now
 
-Mohab@z-claw ❯ chat
+Mohab@z-claw ❯ agents
 
-  💬 Chat Mode
-  Type "exit" to return to main menu
+  🤖 Agents
+  ──────────────────────────────────────────────────
+  1. Senior Developer Agent ★ 4.9
+     Expert coding and architecture • 25K installs
+  2. Research Analyst ★ 4.8
+     Web research and synthesis • 18K installs
+  3. Project Manager ★ 4.7
+     Task and workflow management • 12K installs
+  4. Data Scientist ★ 4.8
+     ML and data analysis • 15K installs
 
-  You: What can you help me with?
-  Z-Claw: I can help with coding, research, writing, data analysis...
-  
-  You: exit
-  Returning to main menu...
+? What would you like to do?
+  View item details
+  Install an item
+  ← Back to marketplace
 
 Mohab@z-claw ❯ exit
 
@@ -185,6 +318,31 @@ Options:
 | **xAI** | Grok 4.20 | Real-time info, wit |
 | **DeepSeek** | DeepSeek V4 | Cost-effective reasoning |
 | **Ollama** | Local models | Privacy, offline use |
+
+---
+
+## 📁 Project Structure
+
+```
+z-claw/
+├── src/
+│   ├── app/api/           # Next.js API routes
+│   │   ├── marketplace/   # Marketplace endpoints
+│   │   ├── agent/         # Agent execution
+│   │   ├── skills/        # Skills API
+│   │   └── providers/     # Provider management
+│   ├── lib/zclaw/         # Core library
+│   │   ├── core/          # Core components
+│   │   ├── marketplaces/  # Marketplace system
+│   │   ├── memory/        # Memory engine
+│   │   ├── planner/       # DAG planner
+│   │   ├── security/      # Security manager
+│   │   ├── tools/         # Tool registry
+│   │   └── voice/         # Voice layer
+│   └── cli/               # CLI interface
+├── bin/z-claw.js          # CLI entry point
+└── package.json
+```
 
 ---
 
